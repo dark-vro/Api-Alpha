@@ -1,5 +1,6 @@
 __path = process.cwd()
 require("./settings");
+const mongoose = require('mongoose');
 var express = require('express'),
     cors = require('cors'),
     flash = require('connect-flash'),
@@ -72,6 +73,8 @@ app.use(function(req, res, next) {
   next();
 })
 
+mongoose.set('strictQuery', false);
+
 app.get('/', (req, res) => {
     res.render('home', {
     layout: 'home'
@@ -87,6 +90,7 @@ app.get('/docs', isAuthenticated, async(req, res) => {
     layout: 'index'
   });
 })
+/*
 app.get('/cecan', isAuthenticated, async(req, res) => {
   let getkey = await getApikey(req.user.id)
   let { apikey, username } = getkey
@@ -167,9 +171,9 @@ app.get('/other', isAuthenticated, async(req, res) => {
     layout: 'other'
   });
 })
-
-app.use('/api', apirouter)
-app.use('/users', userrouter)
+*/
+// app.use('/api', apirouter)
+//app.use('/users', userrouter)
 
 app.use(function (req, res, next) {
     res.status(404).json({
