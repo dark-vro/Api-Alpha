@@ -73,7 +73,6 @@ app.use(function(req, res, next) {
   next();
 })
 
-mongoose.set('strictQuery', false);
 
 app.get('/', (req, res) => {
     res.render('home', {
