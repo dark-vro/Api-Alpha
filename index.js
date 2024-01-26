@@ -19,12 +19,9 @@ const PORT = process.env.PORT || 8080 || 5000 || 3000
 var app = express()
 var { color } = require('./lib/color.js')
 
-const { isAuthenticated } = require('./lib/auth');
+
 const { connectMongoDb } = require('./MongoDB/mongodb');
-const { resetAllLimit, getApikey } = require('./MongoDB/function');
-var apirouter = require('./routes/api'),
-    mainrouter = require('./routes/main'),
-    userrouter = require('./routes/users');
+var mainrouter = require('./routes/main')
 connectMongoDb();
 app.set('trust proxy', 1);
 app.use(compression());
@@ -79,7 +76,7 @@ app.get('/', (req, res) => {
     layout: 'home'
   });
 })
-app.get('/docs', isAuthenticated, async(req, res) => {
+app.get('/docs', async(req, res) => {
   let getkey = await getApikey(req.user.id)
   let { apikey, username, limit} = getkey
   res.render('index', {
@@ -89,90 +86,6 @@ app.get('/docs', isAuthenticated, async(req, res) => {
     layout: 'index'
   });
 })
-/*
-app.get('/cecan', isAuthenticated, async(req, res) => {
-  let getkey = await getApikey(req.user.id)
-  let { apikey, username } = getkey
-  res.render('cecan', {
-    apikey,
-    layout: 'cecan'
-  });
-})
-
-app.get('/downloader', isAuthenticated, async(req, res) => {
-  let getkey = await getApikey(req.user.id)
-  let { apikey, username } = getkey
-  res.render('downloader', {
-    apikey,
-    layout: 'downloader'
-  });
-})
-
-app.get('/news', isAuthenticated, async(req, res) => {
-  let getkey = await getApikey(req.user.id)
-  let { apikey, username } = getkey
-  res.render('news', {
-    apikey,
-    layout: 'news'
-  });
-})
-
-app.get('/photooxy', isAuthenticated, async(req, res) => {
-  let getkey = await getApikey(req.user.id)
-  let { apikey, username } = getkey
-  res.render('photooxy', {
-  apikey,
-    layout: 'photooxy'
-  });
-})
-
-app.get('/search', isAuthenticated, async(req, res) => {
-  let getkey = await getApikey(req.user.id)
-  let { apikey, username } = getkey
-  res.render('search', {
-    apikey,
-    layout: 'search'
-  });
-})
-
-app.get('/nsfw', isAuthenticated, async(req, res) => {
-  let getkey = await getApikey(req.user.id)
-  let { apikey, username } = getkey
-  res.render('nsfw', {
-    apikey,
-    layout: 'nsfw'
-  });
-})
-
-app.get('/islam', isAuthenticated, async(req, res) => {
-  let getkey = await getApikey(req.user.id)
-  let { apikey, username } = getkey
-  res.render('islam', {
-    apikey,
-    layout: 'islam'
-  });
-})
-
-app.get('/game', isAuthenticated, async(req, res) => {
-  let getkey = await getApikey(req.user.id)
-  let { apikey, username } = getkey
-  res.render('game', {
-    apikey,
-    layout: 'game'
-  });
-})
-
-app.get('/other', isAuthenticated, async(req, res) => {
-  let getkey = await getApikey(req.user.id)
-  let { apikey, username } = getkey
-  res.render('other', {
-    apikey,
-    layout: 'other'
-  });
-})
-*/
-// app.use('/api', apirouter)
-//app.use('/users', userrouter)
 
 app.use(function (req, res, next) {
     res.status(404).json({
@@ -183,9 +96,6 @@ app.use(function (req, res, next) {
 
 app.listen(PORT, () => {
     console.log(color("Server running on port " + PORT,'green'))
-    schedule.scheduleJob('* * * * *', () => { 
-    resetAllLimit()
-})
 })
 
 module.exports = app
