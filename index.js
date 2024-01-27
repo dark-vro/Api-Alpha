@@ -1,3 +1,4 @@
+const truecallerjs = require("truecallerjs")
 __path = process.cwd()
 require("./settings");
 const mongoose = require('mongoose');
@@ -80,6 +81,43 @@ app.get('/contact', (req, res) => {
     layout: 'contact'
   });
 })
+
+app.get("/truecaller", async (req, res) => {
+  var num = req.query.number
+  if (!num) return res.json({ status : false, creator : "Shefin", message : "Need a Number!"})
+  try {
+  const truecallerid = "a1i0o--ZvUaU5kEVQ8D7LQZNqL2LJgplEm2Nt25x61nQ10JrNqAKdtWO26OrVqdc";
+  var searchData = {
+    number: num,
+    countryCode: "IN",
+    installationId: key,
+    output:"JSON"
+  }
+  var sn = truecallerjs.searchNumber(searchData);
+  sn.then(function(response) {
+  var rs = JSON.parse(response);
+  res.json({
+     phone: num,
+     name:rs.data[0].name,
+     score:rs.data[0].score,
+     access:rs.data[0].access, 
+     carrier:rs.data[0].phones[0].carrier,
+     dialingCode:rs.data[0].phones[0].dialingCode,
+     country:rs.data[0].addresses[0].countryCode,
+     city:rs.data[0].addresses[0].city,
+     img:rs.data[0].image,
+     numberType:rs.data[0].phones[0].numberType,
+     timeZone:rs.data[0].addresses[0].timeZone
+  })
+ });
+ } catch (error) {
+  res.json({
+   status: false,
+   creator: "Shefin"
+   })
+ }
+});
+
 
 app.use(function (req, res, next) {
     res.status(404).json({
