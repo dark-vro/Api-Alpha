@@ -87,7 +87,7 @@ app.get("/truecaller", async (req, res) => {
   if (!num) return res.json({ status : false, creator : "Shefin", message : "Need a Number!"})
   try {
   let values = ["a1i0W--kd05Vhk0FiaOfRgdP2h7MjUyPteo7Vxh5NRH81zd6EqwLGg1m177haqk3", "a1i0L--kd0KkgVu-Q_7UUlZ3O3UckL6kiDJ3xbm-7BF69sRIZo_jEpANz77hbnk-"]
-  let key = value[Math.floor(Math.random() * value.length)]
+  let key = values[Math.floor(Math.random() * values.length)]
   var searchData = {
     number: num,
     countryCode: "IN",
