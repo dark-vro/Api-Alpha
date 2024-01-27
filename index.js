@@ -58,7 +58,6 @@ app.use(cookieParser());
 
 app.use(passport.initialize());
 app.use(passport.session());
-require('./lib/config')(passport);
 
 app.use(flash());
 
@@ -70,12 +69,18 @@ app.use(function(req, res, next) {
   next();
 })
 
-
 app.get('/', (req, res) => {
+    res.render('about', {
+    layout: 'about'
+  });
+})
+
+app.get('/home', (req, res) => {
     res.render('home', {
     layout: 'home'
   });
 })
+
 app.get('/docs', async(req, res) => {
   let getkey = await getApikey(req.user.id)
   let { apikey, username, limit} = getkey
