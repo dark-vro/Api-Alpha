@@ -94,7 +94,7 @@ app.get("/truecaller", async (req, res) => {
     installationId: key,
     output:"JSON"
   }
-  var sn = truecallerjs.searchNumber(searchData);
+  var sn = truecallerjs.search(searchData);
   sn.then(function(response) {
   var rs = JSON.parse(response);
   res.json({
@@ -112,6 +112,7 @@ app.get("/truecaller", async (req, res) => {
   })
  });
  } catch (error) {
+   console.log(error)
   res.json({
    status: false,
    creator: "Shefin"
