@@ -75,9 +75,9 @@ app.get('/', (req, res) => {
   });
 })
 
-app.get('/home', (req, res) => {
-    res.render('home', {
-    layout: 'home'
+app.get('/contact', (req, res) => {
+    res.render('contact', {
+    layout: 'contact'
   });
 })
 
