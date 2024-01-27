@@ -95,7 +95,6 @@ app.get("/truecaller", async (req, res) => {
     output:"JSON"
   }
   const response = await truecallerjs.search(searchData);
-  res.json({ response.json() })
   res.json({
       name: response.getName() // "Sumith Emmadi"
      country: response.getCountryDetails()
