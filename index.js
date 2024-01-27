@@ -94,23 +94,12 @@ app.get("/truecaller", async (req, res) => {
     installationId: key,
     output:"JSON"
   }
-  var sn = truecallerjs.search(searchData);
-  sn.then(function(response) {
-  var rs = JSON.parse(response);
+  const response: Format = await truecallerjs.search(searchData);
+  res.json({ response.json() })
   res.json({
-     phone: num,
-     name:rs.data[0].name,
-     score:rs.data[0].score,
-     access:rs.data[0].access, 
-     carrier:rs.data[0].phones[0].carrier,
-     dialingCode:rs.data[0].phones[0].dialingCode,
-     country:rs.data[0].addresses[0].countryCode,
-     city:rs.data[0].addresses[0].city,
-     img:rs.data[0].image,
-     numberType:rs.data[0].phones[0].numberType,
-     timeZone:rs.data[0].addresses[0].timeZone
-  })
- });
+      name: response.getName() // "Sumith Emmadi"
+     country: response.getCountryDetails()
+ })
  } catch (error) {
    console.log(error)
   res.json({
