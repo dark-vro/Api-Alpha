@@ -94,7 +94,7 @@ app.get("/truecaller", async (req, res) => {
     installationId: key,
     output:"JSON"
   }
-  const response: Format = await truecallerjs.search(searchData);
+  const response = await truecallerjs.search(searchData);
   res.json({ response.json() })
   res.json({
       name: response.getName() // "Sumith Emmadi"
