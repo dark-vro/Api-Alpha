@@ -81,17 +81,6 @@ app.get('/contact', (req, res) => {
   });
 })
 
-app.get('/docs', async(req, res) => {
-  let getkey = await getApikey(req.user.id)
-  let { apikey, username, limit} = getkey
-  res.render('index', {
-    apikey,
-    username,
-    limit,
-    layout: 'index'
-  });
-})
-
 app.use(function (req, res, next) {
     res.status(404).json({
         status: false,
